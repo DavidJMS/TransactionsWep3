@@ -41,6 +41,7 @@ async function checkIfWalletIsConnected(onConnected) {
 export default function MetaMaskAuth({ onAddressChanged }) {
   const [userAddress, setUserAddress] = useState("");
   const [transactions, setTransactions] = useState([]);
+  console.log('transactions', transactions)
 
   useEffect(() => {
     checkIfWalletIsConnected(setUserAddress);
@@ -50,9 +51,10 @@ export default function MetaMaskAuth({ onAddressChanged }) {
     onAddressChanged(userAddress);
 
     if(!userAddress) return
-    fetch(`https://api.bscscan.com/api?module=account&action=txlist&address=${userAddress}&startblock=0&page=1&offset=10&sort=desc&apikey=${API_KEY}`)
+    fetch(`https://api.bscscan.com/api?module=account&action=txlist&address=${userAddress}&startblock=0&page=1&offset=50&sort=desc&apikey=${API_KEY}`)
     .then(response => response.json())
     .then(data => {
+      // setTransactions(data.result.filter(tx => tx.input === '0x'));
       setTransactions(data.result);
     });
   }, [userAddress]);
@@ -62,6 +64,11 @@ export default function MetaMaskAuth({ onAddressChanged }) {
     return bnb.toString();
   }
 
+  const getDate = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    return date.toLocaleString();
+  }
+
   return userAddress ? (
     <div>
       Connected with <Address userAddress={userAddress} />
@@ -69,11 +76,17 @@ export default function MetaMaskAuth({ onAddressChanged }) {
         {
           transactions.length > 0 && transactions.map(transaction => {
             return (
-              <div style={{margin: '10px'}} key={transaction.hash}>
+              <div style={{
+                margin: '10px', 
+                border: transaction.input === '0x' ? '' : '3px solid red', 
+                background: transaction.value === '0' ? '#ff7676' : '#a3f3d2' 
+              }} key={transaction.hash}>
                 {/* <div>{transaction.hash}</div> */}
-                <div>fecha {new Date(parseInt(transaction.timeStamp)).toUTCString()}</div>
+                <div>fecha {getDate(transaction.timeStamp)}</div>
+                <div>from {transaction.from}</div>
                 <div>to {transaction.to}</div>
                 <div>value {weiToBNB(transaction.value)} BNB</div>
+                <div>hash <a target='_blank' href={`https://bscscan.com/tx/${transaction.hash}`}>{transaction.hash}</a></div>
                 {/* <div>{transaction.gasPrice}</div> */}
                 {/* <div>{transaction.gas}</div> */}
                 {/* <div>{transaction.input}</div> */}
