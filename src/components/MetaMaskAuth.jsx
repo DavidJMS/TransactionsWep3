@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-const API_URL = import.meta.env.VITE_BE_API
-const API_KEY = import.meta.env.VITE_API_KEY
+import detectEthereumProvider from '@metamask/detect-provider';
+import block_explorer_list from "../../block_explorer_list";
+
+const BSCSCAN_API_KEY = import.meta.env.VITE_BSCSCAN_API_KEY
+const ETHERSCAN_API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY
 
 function isMobileDevice() {
   return 'ontouchstart' in window || 'onmsgesturechange' in window;
 }
-
 async function connect(onConnected) {
   if (!window.ethereum) {
     alert("Get MetaMask!");
@@ -15,7 +17,6 @@ async function connect(onConnected) {
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts",
   });
-
   onConnected(accounts[0]);
 }
 
@@ -37,31 +38,106 @@ async function checkIfWalletIsConnected(onConnected) {
   }
 }
 
-
-export default function MetaMaskAuth({ onAddressChanged }) {
+export default function MetaMaskAuth() {
+  const [chainId, setChainId] = useState(null);
   const [userAddress, setUserAddress] = useState("");
   const [transactions, setTransactions] = useState([]);
+  const [accountInfo, setAccountInfo] = useState({});
+
   console.log('transactions', transactions)
 
   useEffect(() => {
     checkIfWalletIsConnected(setUserAddress);
   }, []);
 
-  useEffect(() => {
-    onAddressChanged(userAddress);
+  useEffect(()=>{
+    const init = async () => {
+      // this returns the provider, or null if it wasn't detected
+      const provider = await detectEthereumProvider();
 
-    if(!userAddress) return
-    fetch(`https://api.bscscan.com/api?module=account&action=txlist&address=${userAddress}&startblock=0&page=1&offset=50&sort=desc&apikey=${API_KEY}`)
+      if (provider) {
+        startApp(provider); // Initialize your app
+      } else {
+        console.log('Please install MetaMask!');
+      }
+      const chainId = await ethereum.request({ method: 'eth_chainId' });
+      handleChainChanged(chainId);
+
+      ethereum.on('chainChanged', handleChainChanged);
+      ethereum.on('accountsChanged', handleAccountsChanged);
+    }
+
+    init()
+  }, [])
+
+  function startApp(provider) {
+    // If the provider returned by detectEthereumProvider is not the same as
+    // window.ethereum, something is overwriting it, perhaps another wallet.
+    if (provider !== window.ethereum) {
+      console.error('Do you have multiple wallets installed?');
+    }
+    // Access the decentralized web!
+  }
+
+  function handleChainChanged(_chainId) {
+    if(chainId){
+      // We recommend reloading the page, unless you must do otherwise
+      window.location.reload();
+    } else {
+      console.log('Chain changed to ' + _chainId + ' id: ' + parseInt(_chainId, 16));
+      setChainId(parseInt(_chainId, 16));
+    }
+  }
+
+  // For now, 'eth_accounts' will continue to always return an array
+  function handleAccountsChanged(accounts) {
+    if (accounts.length === 0) {
+      // MetaMask is locked or the user has not connected any accounts
+      console.log('Please connect to MetaMask.');
+    } else if (accounts[0] !== userAddress) {
+      setUserAddress(accounts[0]);
+      // Do any other work!
+    }
+  }
+
+  useEffect(() => {
+    if(!userAddress || !chainId) return
+    const chainInfo = block_explorer_list.filter(e => e.id === chainId)[0]
+    if(!chainInfo) throw new Error('Chain not found')
+    let apiKey = ''
+    switch(chainInfo.symbol){
+      case 'ETH':
+        apiKey = ETHERSCAN_API_KEY
+        break
+      case 'BNB':
+        apiKey = BSCSCAN_API_KEY
+        break
+      default:
+        throw new Error('Chain not found')
+    }
+    
+    fetch(`${chainInfo.explorer}api?module=account&action=balance&address=${userAddress}&apikey=${apiKey}`)
+    .then(res => res.json())
+    .then(data => {
+      setAccountInfo({
+        balance: data.result,
+        symbol: chainInfo.symbol
+      })
+    })
+    .catch(err => console.log(err))
+
+    fetch(`${chainInfo.explorer}api?module=account&action=txlist&address=${userAddress}&startblock=0&page=1&offset=50&sort=desc&apikey=${apiKey}`)
     .then(response => response.json())
     .then(data => {
-      // setTransactions(data.result.filter(tx => tx.input === '0x'));
-      setTransactions(data.result);
-    });
-  }, [userAddress]);
+      const noContractsTransactions = data.result.filter(tx => (tx.input === '0x' && tx.value !== '0'))
+      setTransactions(noContractsTransactions);
+    })
+    .catch(error => console.log(error))
+  }, [userAddress, chainId]);
 
-  const weiToBNB = (wei) => {
+  const transformWei = (wei) => {
     const bnb = wei / 1000000000000000000
-    return bnb.toString();
+    return bnb.toString().substring(0, 8);
   }
 
   const getDate = (timestamp) => {
@@ -72,20 +148,23 @@ export default function MetaMaskAuth({ onAddressChanged }) {
   return userAddress ? (
     <div>
       Connected with <Address userAddress={userAddress} />
+      <h1>{transformWei(accountInfo.balance || 0)}{accountInfo.symbol}</h1>
       <div>
+        {
+          transactions.length === 0 && <div>No transactions</div>
+        }
         {
           transactions.length > 0 && transactions.map(transaction => {
             return (
               <div style={{
                 margin: '10px', 
-                border: transaction.input === '0x' ? '' : '3px solid red', 
-                background: transaction.value === '0' ? '#ff7676' : '#a3f3d2' 
+                background: transaction.from === userAddress ? '#ff7676' : '#a3f3d2' 
               }} key={transaction.hash}>
                 {/* <div>{transaction.hash}</div> */}
                 <div>fecha {getDate(transaction.timeStamp)}</div>
                 <div>from {transaction.from}</div>
                 <div>to {transaction.to}</div>
-                <div>value {weiToBNB(transaction.value)} BNB</div>
+                <div>value {transformWei(transaction.value)} BNB</div>
                 <div>hash <a target='_blank' href={`https://bscscan.com/tx/${transaction.hash}`}>{transaction.hash}</a></div>
                 {/* <div>{transaction.gasPrice}</div> */}
                 {/* <div>{transaction.gas}</div> */}
@@ -104,7 +183,7 @@ export default function MetaMaskAuth({ onAddressChanged }) {
 
 function Connect({ setUserAddress }) {
   if (isMobileDevice()) {
-    const dappUrl = "metamask-auth.ilamanov.repl.co"; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
+    const dappUrl = ""; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
     const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
     return (
       <a href={metamaskAppDeepLink}>
