@@ -1,0 +1,7 @@
+{
+  "endpoint": "api/sz-transactionsweb3",
+  "database": "sample_airbnb",
+  "dataApikey": "YOUR_API_KEY",
+  "datasource": "Cluster0",
+  "collection": "listingsAndReviews"
+}
