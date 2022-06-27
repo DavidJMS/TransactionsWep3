@@ -1,23 +1,6 @@
-scalar MongoFilter
-scalar MongoProjection
-scalar MongoSort
-
-type Query {
-  mongo(
-    dataApikey: String!
-    dataSource: String!
-    collection: String!
-    database: String!
-    filter: MongoFilter
-    projection: MongoProjection
-    sort: MongoSort
-    limit: Int
-    skip: Int
-  ): JSON
-    @rest(
-    #   endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/beta/action/find"
-      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/findOne"
-      method: POST
-      headers: [{ name: "api-key", value: "$dataApikey" }]
-    )
+schema
+  @sdl(
+    files: [ "schema/contacts.graphql" ]
+  ) {
+  query: Query
 }
