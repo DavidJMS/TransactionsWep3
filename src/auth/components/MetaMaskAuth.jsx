@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import detectEthereumProvider from '@metamask/detect-provider';
-import block_explorer_list from "../../block_explorer_list";
+import block_explorer_list from "../../../block_explorer_list";
 
 const BSCSCAN_API_KEY = import.meta.env.VITE_BSCSCAN_API_KEY
 const ETHERSCAN_API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY
