@@ -8,8 +8,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "@apollo/react-hooks": "^4.0.0",
     "@metamask/detect-provider": "^1.2.0",
     "@reduxjs/toolkit": "^1.8.2",
+    "apollo-boost": "^0.4.9",
+    "graphql": "^16.5.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0"

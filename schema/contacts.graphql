@@ -1,0 +1,50 @@
+scalar MongoFilter
+scalar MongoProjection
+scalar MongoSort
+
+type Query {
+  getContacts(
+    dataApikey: String!
+    dataSource: String!
+    collection: String!
+    database: String!
+    filter: MongoFilter
+    projection: MongoProjection
+    sort: MongoSort
+    limit: Int
+    skip: Int
+  ): JSON
+  # Directiva
+    @rest(
+      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/find" # para obtener todos
+      # endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/findOne" # para obtener uno
+      method: POST
+      configuration: "contact_config"
+      headers: [{ name: "api-key", value: "$dataApikey" }]
+      # resultroot: "document" # para obtener uno
+      resultroot: "documents" # para obtener varios
+    )
+
+  getContact(
+    dataApikey: String!
+    dataSource: String!
+    collection: String!
+    database: String!
+    filter: MongoFilter
+    projection: MongoProjection
+    sort: MongoSort
+    limit: Int
+    skip: Int
+  ): JSON
+  # Directiva
+    @rest(
+      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/findOne" # para obtener uno
+      method: POST
+      configuration: "contact_config"
+      headers: [{ name: "api-key", value: "$dataApikey" }]
+      resultroot: "document" # para obtener uno
+    )
+
+    # deleteContact()
+}
+
