@@ -1,0 +1,20 @@
+# type Contact {
+#     _id: String
+#     name: String
+#     # address: String
+#     # crypt: String
+#     # favoritos: String
+# }
+
+# type Query {
+#     contact(id:String): Contact
+#     @rest(
+#             endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1"
+#             method: POST
+#             headers: [{ name: "api-key", value: "$dataApikey" }]        
+#         )   
+# }
+
+# schema @sdl(files: ["contacts.graphql"]){
+#     query: Query
+# }

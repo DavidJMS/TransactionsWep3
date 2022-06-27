@@ -1,0 +1,6 @@
+configurationset:
+  - configuration:
+      database: database
+      dataApikey: Api key
+      datasource: cluster name
+      collection: collection
