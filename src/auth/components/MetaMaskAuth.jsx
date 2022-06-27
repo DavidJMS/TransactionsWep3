@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import detectEthereumProvider from '@metamask/detect-provider';
 import block_explorer_list from "../../../block_explorer_list";
 
+//import button styled from UI styles 
+import { Button } from "../../ui/components/styles/Button.styled";
 const BSCSCAN_API_KEY = import.meta.env.VITE_BSCSCAN_API_KEY
 const ETHERSCAN_API_KEY = import.meta.env.VITE_ETHERSCAN_API_KEY
 
@@ -187,18 +189,18 @@ function Connect({ setUserAddress }) {
     const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
     return (
       <a href={metamaskAppDeepLink}>
-        <button>
+        <Button>
           Connect to MetaMask
-        </button>
+        </Button>
       </a>
     );
   }
 
 
   return (
-    <button onClick={() => connect(setUserAddress)}>
+    <Button onClick={() => connect(setUserAddress)}>
       Connect to MetaMask
-    </button>
+    </Button>
   );
 }
 

@@ -1,6 +1,4 @@
-import MetaMaskAuth from './auth/components/MetaMaskAuth'
 import { AppRouter } from './router/AppRouter'
-import './styles/styles.scss'
 
 function App() {
   return (
