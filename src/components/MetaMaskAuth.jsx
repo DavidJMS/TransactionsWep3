@@ -44,13 +44,13 @@ export default function MetaMaskAuth() {
   const [transactions, setTransactions] = useState([]);
   const [accountInfo, setAccountInfo] = useState({});
 
-  console.log('transactions', transactions)
+  // console.log('transactions', transactions)
 
   useEffect(() => {
     checkIfWalletIsConnected(setUserAddress);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     const init = async () => {
       // this returns the provider, or null if it wasn't detected
       const provider = await detectEthereumProvider();
@@ -80,7 +80,7 @@ export default function MetaMaskAuth() {
   }
 
   function handleChainChanged(_chainId) {
-    if(chainId){
+    if (chainId) {
       // We recommend reloading the page, unless you must do otherwise
       window.location.reload();
     } else {
@@ -101,11 +101,11 @@ export default function MetaMaskAuth() {
   }
 
   useEffect(() => {
-    if(!userAddress || !chainId) return
+    if (!userAddress || !chainId) return
     const chainInfo = block_explorer_list.filter(e => e.id === chainId)[0]
-    if(!chainInfo) throw new Error('Chain not found')
+    if (!chainInfo) throw new Error('Chain not found')
     let apiKey = ''
-    switch(chainInfo.symbol){
+    switch (chainInfo.symbol) {
       case 'ETH':
         apiKey = ETHERSCAN_API_KEY
         break
@@ -115,24 +115,24 @@ export default function MetaMaskAuth() {
       default:
         throw new Error('Chain not found')
     }
-    
+
     fetch(`${chainInfo.explorer}api?module=account&action=balance&address=${userAddress}&apikey=${apiKey}`)
-    .then(res => res.json())
-    .then(data => {
-      setAccountInfo({
-        balance: data.result,
-        symbol: chainInfo.symbol
+      .then(res => res.json())
+      .then(data => {
+        setAccountInfo({
+          balance: data.result,
+          symbol: chainInfo.symbol
+        })
       })
-    })
-    .catch(err => console.log(err))
+      .catch(err => console.log(err))
 
     fetch(`${chainInfo.explorer}api?module=account&action=txlist&address=${userAddress}&startblock=0&page=1&offset=50&sort=desc&apikey=${apiKey}`)
-    .then(response => response.json())
-    .then(data => {
-      const noContractsTransactions = data.result.filter(tx => (tx.input === '0x' && tx.value !== '0'))
-      setTransactions(noContractsTransactions);
-    })
-    .catch(error => console.log(error))
+      .then(response => response.json())
+      .then(data => {
+        const noContractsTransactions = data.result.filter(tx => (tx.input === '0x' && tx.value !== '0'))
+        setTransactions(noContractsTransactions);
+      })
+      .catch(error => console.log(error))
   }, [userAddress, chainId]);
 
   const transformWei = (wei) => {
@@ -157,8 +157,8 @@ export default function MetaMaskAuth() {
           transactions.length > 0 && transactions.map(transaction => {
             return (
               <div style={{
-                margin: '10px', 
-                background: transaction.from === userAddress ? '#ff7676' : '#a3f3d2' 
+                margin: '10px',
+                background: transaction.from === userAddress ? '#ff7676' : '#a3f3d2'
               }} key={transaction.hash}>
                 {/* <div>{transaction.hash}</div> */}
                 <div>fecha {getDate(transaction.timeStamp)}</div>
@@ -176,7 +176,7 @@ export default function MetaMaskAuth() {
       </div>
     </div>
   ) : (
-     <Connect setUserAddress={setUserAddress}/>
+    <Connect setUserAddress={setUserAddress} />
   );
 }
 
@@ -187,14 +187,14 @@ function Connect({ setUserAddress }) {
     const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
     return (
       <a href={metamaskAppDeepLink}>
-         <button>
-           Connect to MetaMask
-         </button>
+        <button>
+          Connect to MetaMask
+        </button>
       </a>
     );
   }
 
-  
+
   return (
     <button onClick={() => connect(setUserAddress)}>
       Connect to MetaMask
