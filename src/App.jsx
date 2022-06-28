@@ -4,7 +4,7 @@ import GlobalStyles from './ui/components/styles/Global'
 
 const theme = {
   colors: {
-    body: '#3E3E3E',
+    body: '#000',
   }
 }
 
