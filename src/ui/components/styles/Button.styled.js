@@ -5,10 +5,10 @@ display: inline-block;
 font-size: 1em;
 margin: 1em;
 padding: 1em 2em;
-border: 2px solid palevioletred;
+border: none;
 border-radius: 12px;
 display: block;
 background-color: ${({bg}) => bg || '#fff'};
-background-color: ${({color}) => color || 'gray'};
+background-color: ${({color}) => color || '#fff'};
 `;
 

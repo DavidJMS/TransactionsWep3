@@ -19,5 +19,9 @@ const GlobalStyles = createGlobalStyle`
     img {
         max-width: 100%;
     }
+
+    h1 {
+        color: white;
+    }
 `
 export default GlobalStyles;
