@@ -199,7 +199,7 @@ function Connect({ setUserAddress }) {
 
   return (
     <Button onClick={() => connect(setUserAddress)}>
-      Connect to MetaMask
+      Sign In with MetaMask
     </Button>
   );
 }
