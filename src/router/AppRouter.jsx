@@ -6,14 +6,14 @@ import ContactList from '../components/contacts/ContactList'
 import TransactionsPage from '../pages/TransactionsPage'
 
 export const AppRouter = () => {
-    return (
-        <>
-            <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="about" element={<TransactionsPage />} />
-                <Route path="/contacts" element={<ContactList />} />
-                <Route path="/" element={<Navigate to="/login" />} />
-            </Routes>
-        </>
-    )
+  return (
+    <>
+      <Routes>
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/dashboard' element={<TransactionsPage />} />
+        <Route path='/contacts' element={<ContactList />} />
+        <Route path='/' element={<Navigate to='/login' />} />
+      </Routes>
+    </>
+  )
 }
