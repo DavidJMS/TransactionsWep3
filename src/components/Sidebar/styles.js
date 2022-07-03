@@ -22,7 +22,7 @@ export const SLogo = styled.div`
     }
     cursor: pointer;
 
-    margin-botton: ${v.lgSpacing};
+    margin-bottom: ${v.lgSpacing};
 `;
 
 export const SDivider = styled.div`
