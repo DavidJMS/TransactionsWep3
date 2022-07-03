@@ -6,3 +6,8 @@ export const Text = styled.p`
   margin: ${({ margin }) => margin || 'initial'};
   color: ${({ color }) => color || 'inherit'};
 `
+export const HeadingText = styled.h1`
+  ::selection {
+    background: ${({ color }) => color || 'inherit'};
+  }
+`

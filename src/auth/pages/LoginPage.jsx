@@ -4,6 +4,7 @@ import { Container } from '../../ui/components/styles/Container.styled'
 import { InnerContainer } from '../../ui/components/styles/InnerContainer.styled'
 import MetaMaskAuth from '../components/MetaMaskAuth'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { HeadingText } from '../../ui/components/styles/Text.styled'
 
 export const LoginPage = () => {
   const navigate = useNavigate()
@@ -16,19 +17,17 @@ export const LoginPage = () => {
   return (
     <Container>
       <InnerContainer>
-        <h1>Welcome to the Future!</h1>
+        <HeadingText
+        color='#dcb90a'
+        >🚀 Welcome to the Future 🚀</HeadingText>
         <MetaMaskAuth handleConnected={handleConnected} />
-        <p style={{
-            textAlign: 'center',
-            color: '#fff',
-            marginTop: '0.3rem'
-          }}>or</p>
         <NavLink
           to='/dashboard'
           style={{
+            fontSize: '1rem',
             textDecoration: 'none',
-            color: '#fff',
-            marginTop: '0.3rem'            
+            color: '#c6c6c6',
+            marginTop: '0.8rem'            
           }}
         >
           Continue without login
