@@ -10,9 +10,9 @@ const Sidebar = () => {
 
   return (
     <SSidebar>
-      {/* <SLogo>
+      <SLogo>
         <img src={logoSVG} alt="logo" />
-      </SLogo> */}
+      </SLogo>
       <SDivider />
       <SLinkContainer>
         <SLink to="/dashboard">
