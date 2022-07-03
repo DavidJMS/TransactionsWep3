@@ -14,7 +14,7 @@ export const SSidebar = styled.div`
 `;
 
 export const SLogo = styled.div`
-    width: 52px;
+    width: 25vh;
 
     img {
         max-width: 100%;
