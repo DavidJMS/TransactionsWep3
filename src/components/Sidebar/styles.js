@@ -54,7 +54,7 @@ export const SLink = styled(Link)`
 export const SLinkIcon = styled.div`
     padding: ${v.lgSpacing} ${v.mdSpacing};
     display: flex;
-
+    color: #fff !important;
     svg {
         font-size: 20px;
     }
@@ -63,6 +63,7 @@ export const SLinkIcon = styled.div`
 export const SLinkLabel = styled.span`
     display: block;
     flex: 1;
+    color: #fff;
     margin-left: ${v.smSpacing};
 `;
 
