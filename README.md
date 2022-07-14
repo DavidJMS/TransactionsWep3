@@ -18,7 +18,7 @@ We need a stepzen accounts to use this app web.
 
 - [@David Marabay](https://github.com/DavidJMS)
 - [@Daniel Sifontes](https://github.com/DanielSftns)
-- [@David Marabay](https://github.com/fedelombar)
+- [@Federico Lombardozzi](https://github.com/fedelombar)
 
 ## Documents
 
