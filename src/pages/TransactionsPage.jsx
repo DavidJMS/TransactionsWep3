@@ -48,6 +48,7 @@ const TransactionsPage = () => {
   const [transactions, setTransactions] = useState([])
   const [accountInfo, setAccountInfo] = useState({})
   const [amountSend, setAmountSend] = useState(0)
+  const [reciverAddress, setReciverAddress] = useState('')
   const ethereum = window.ethereum
 
   useEffect(() => {
@@ -156,7 +157,7 @@ const TransactionsPage = () => {
         params: [
           {
             from: userAddress,
-            to: '0x8e86be160fabe82e2d7c38474ec0035197b79c6f',
+            to: reciverAddress,
             value: parseFloat(amountSend * 1000000000000000000).toString(16) // in wei
           }
         ]
@@ -186,8 +187,9 @@ const TransactionsPage = () => {
   return (
     <Container>
       <BalanceComponent balance={transformWei(accountInfo.balance || 0)} symbol={accountInfo.symbol} />
-      <button onClick={sendTransfer}>test Transfer</button>
-      <input value={amountSend} onChange={handleAmountSend} type='text' />
+      <input style={{ display: 'block' }} type='text' value={reciverAddress} onChange={(e) => setReciverAddress(e.target.value)} placeholder='wallet recipient' />
+      <input style={{ display: 'block' }} value={amountSend} onChange={handleAmountSend} type='text' placeholder='amount' />
+      <button onClick={sendTransfer}>Transfer</button>
       <TransactionsComponent transactions={transactions} symbol={accountInfo.symbol} />
     </Container>
   )
