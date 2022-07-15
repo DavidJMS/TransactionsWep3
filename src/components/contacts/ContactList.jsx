@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
-import { GET_CONTACT, CREATE_CONTACT } from '../../querys/contacts'
+import { GET_CONTACT, CREATE_CONTACT, UPDATE_CONTACT } from '../../querys/contacts'
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
@@ -30,8 +30,25 @@ const ContactList = () => {
       }
     }
   })
+  const { loading3, error3, data3 } = useQuery(UPDATE_CONTACT, {
+    variables: {
+      dataApikey: VITE_DATA_API_KEY,
+      datasource: VITE_DATA_SOURCE,
+      database: VITE_DATABASE,
+      collection: VITE_COLLECTION,
+      filter: { _id: { $oid: '62d1dca35887dc83b957dcd8' } },
+      update: {
+        $set: {
+          cryptocurrency_account: '8546546578',
+          full_name: 'Editado Desde stepzen'
+
+        }
+      }
+    }
+  })
   console.log(error, data, loading, 'Ejecutado!')
   console.log(error2, data2, loading2, 'Creado!')
+  console.log(error3, data3, loading3, 'Editado!')
 
   return (
     <>

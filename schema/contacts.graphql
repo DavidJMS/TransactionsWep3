@@ -45,7 +45,6 @@ type Query {
       resultroot: "document" # para obtener uno
     )
 
-  # deleteContact()
   crateContact(
     dataApikey: String!
     dataSource: String!
@@ -56,6 +55,23 @@ type Query {
     # Directiva
     @rest(
       endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/insertOne"
+      method: POST
+      configuration: "contact_config"
+      headers: [{ name: "api-key", value: "$dataApikey" }]
+      resultroot: "document" # para obtener uno
+    )
+
+  updateContact(
+    dataApikey: String!
+    dataSource: String!
+    collection: String!
+    database: String!
+    filter: JSON!
+    update: JSON!
+  ): JSON
+    # Directiva
+    @rest(
+      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/updateOne"
       method: POST
       configuration: "contact_config"
       headers: [{ name: "api-key", value: "$dataApikey" }]
