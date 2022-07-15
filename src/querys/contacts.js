@@ -42,8 +42,26 @@ const UPDATE_CONTACT = gql`
   }
 `
 
+const DELETE_CONTACT = gql`
+  query MyQuery (
+  $dataApikey: String!, 
+  $database: String!,
+  $datasource: String!, 
+  $collection: String!, 
+  $filter: JSON!)  {
+    deleteContact(
+      collection: $collection
+      dataApikey: $dataApikey
+      database: $database
+      dataSource: $datasource
+      filter: $filter
+    )
+  }
+`
+
 export {
   GET_CONTACT,
   CREATE_CONTACT,
-  UPDATE_CONTACT
+  UPDATE_CONTACT,
+  DELETE_CONTACT
 }
