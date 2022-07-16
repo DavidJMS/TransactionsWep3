@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
 import { GET_CONTACT, CREATE_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from '../../querys/contacts'
@@ -18,6 +18,7 @@ const ContactList = () => {
       collection: VITE_COLLECTION
     }
   })
+
   const { loading2, error2, data2 } = useQuery(CREATE_CONTACT, {
     variables: {
       dataApikey: VITE_DATA_API_KEY,
@@ -62,7 +63,6 @@ const ContactList = () => {
 
   return (
     <>
-
     </>
   )
 }
