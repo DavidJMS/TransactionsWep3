@@ -2,7 +2,6 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
 import { GET_CONTACT, CREATE_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from '../../querys/contacts'
-import ContactCard from './ContactCard'
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
@@ -64,14 +63,6 @@ const ContactList = () => {
 
   return (
     <>
-     <h1>Contacts</h1>
-      <ul>
-        {data.contacts.map(contact => (
-          <li key={contact.id}>
-            <ContactCard contact={contact} />
-          </li>
-        ))}
-      </ul>
     </>
   )
 }

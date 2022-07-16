@@ -45,7 +45,7 @@ type Query {
       resultroot: "document" # para obtener uno
     )
 
-  crateContact(
+  createContact(
     dataApikey: String!
     dataSource: String!
     collection: String!
