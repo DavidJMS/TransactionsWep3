@@ -23,5 +23,42 @@ const GlobalStyles = createGlobalStyle`
     h1 {
         color: white;
     }
+
+    .btn{
+        padding: 1.25em 2em;
+        outline: none;
+        border-radius: 5px !important;
+        font-size: 18px !important;
+        font-weight: 600;
+
+        &.btn-outline {
+            background-color: transparent !important;
+            box-shadow: inset 0px 0px 0 2px;
+        }
+
+        &.btn-success{
+            color: #303F9F;
+        }
+
+        &.btn-warning{
+            color: #000;
+            background-color: #FCE444 !important;
+        }
+    }
+
+    .swal2-container {
+        &.toast-error {
+            .swal2-toast {
+                color: #722213;
+                background: #ffab9c;
+            }
+        }
+        &.toast-success {
+            .swal2-toast {
+                background: #a4e4a4;
+                color: #012501;
+            }
+        }
+    }
 `
 export default GlobalStyles

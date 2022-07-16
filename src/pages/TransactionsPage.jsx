@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container } from '../ui/components/styles/Container.styled'
 import BalanceComponent from '../components/dashboard/BalanceComponent'
 import TransactionsComponent from '../components/dashboard/TransactionsComponent'
+import TransferButtonComponent from '../components/dashboard/TransferButtonComponent'
 
 import detectEthereumProvider from '@metamask/detect-provider'
 import blockExplorerList from '../../block_explorer_list'
@@ -47,8 +48,6 @@ const TransactionsPage = () => {
   const [userAddress, setUserAddress] = useState('')
   const [transactions, setTransactions] = useState([])
   const [accountInfo, setAccountInfo] = useState({})
-  const [amountSend, setAmountSend] = useState(0)
-  const [reciverAddress, setReciverAddress] = useState('')
   const ethereum = window.ethereum
 
   useEffect(() => {
@@ -150,46 +149,10 @@ const TransactionsPage = () => {
     return value.toString().substring(0, 8)
   }
 
-  const sendTransfer = () => {
-    ethereum
-      .request({
-        method: 'eth_sendTransaction',
-        params: [
-          {
-            from: userAddress,
-            to: reciverAddress,
-            value: parseFloat(amountSend * 1000000000000000000).toString(16) // in wei
-          }
-        ]
-      })
-      .then((txHash) => console.log('success ' + txHash))
-      .catch((error) => console.log(error))
-  }
-
-  const handleAmountSend = (e) => {
-    const value = e.target.value
-    // regex only numbers
-    if (!value.match(/^[0-9]*.[0-9]*$/)) {
-      window.alert('invalid amount')
-      return
-    }
-    const weitSending = parseFloat(value) * 1000000000000000000
-    const weitBalance = parseFloat(accountInfo.balance)
-
-    if (weitSending > weitBalance) {
-      window.alert('You don\'t have enough balance')
-      return
-    }
-
-    setAmountSend(value)
-  }
-
   return (
     <Container>
       <BalanceComponent balance={transformWei(accountInfo.balance || 0)} symbol={accountInfo.symbol} />
-      <input style={{ display: 'block' }} type='text' value={reciverAddress} onChange={(e) => setReciverAddress(e.target.value)} placeholder='wallet recipient' />
-      <input style={{ display: 'block' }} value={amountSend} onChange={handleAmountSend} type='text' placeholder='amount' />
-      <button onClick={sendTransfer}>Transfer</button>
+      <TransferButtonComponent balance={accountInfo.balance} symbol={accountInfo.symbol} />
       <TransactionsComponent transactions={transactions} symbol={accountInfo.symbol} />
     </Container>
   )
