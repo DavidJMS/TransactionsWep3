@@ -1,29 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { OverlayModal } from '../../ui/components/styles/OverlayModal.styled'
 import { Modal } from '../../ui/components/styles/Modal.styled'
 import Swal from 'sweetalert2'
+import { useQuery } from '@apollo/react-hooks'
+import { GET_CONTACT } from '../../querys/contacts'
+
+// Environment Vars
+const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
+const VITE_COLLECTION = import.meta.env.VITE_COLLECTION
+const VITE_DATABASE = import.meta.env.VITE_DATABASE
+const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 const ModalTransfer = ({ onClose, handleSubmit, symbol }) => {
   const [showList, setShowList] = useState(false)
-  const [contacts, setContacts] = useState([
-    {
-      name: 'Pepe Pérez',
-      address: '0x1234567890123456gds012345678901234567890'
-    },
-    {
-      name: 'Raul Díaz',
-      address: '0x1234567890123456789012345678901234567890'
-    },
-    {
-      name: 'David',
-      address: '0x305d35424F098D600CB9ac8E59C6fcBfF8d314bD'
-    }
-  ])
+  const [contacts, setContacts] = useState([])
   const [selectedContact, setSelectedContact] = useState(null)
   const [amountSend, setAmountSend] = useState(0)
-
-  const infoSelectedContact = contacts.find(contact => contact.address === selectedContact)
+  console.log({ contacts })
+  const infoSelectedContact = contacts.find(contact => contact.cryptocurrency_account === selectedContact)
   const [error, setError] = useState('')
+
+  const { error: queryError, loading, data } = useQuery(GET_CONTACT, {
+    variables: {
+      dataApikey: VITE_DATA_API_KEY,
+      datasource: VITE_DATA_SOURCE,
+      database: VITE_DATABASE,
+      collection: VITE_COLLECTION
+    }
+  })
+
+  useEffect(() => {
+    if (data) {
+      setContacts(data.getContacts)
+    }
+  }, [data])
 
   const handleSelectContact = (address) => {
     setSelectedContact(address)
@@ -57,7 +67,7 @@ const ModalTransfer = ({ onClose, handleSubmit, symbol }) => {
 
     Swal.fire({
       title: 'Are you sure you want to send this payment?',
-      text: `You are about to send ${amountSend} ${symbol} to ${infoSelectedContact.name}`,
+      text: `You are about to send ${amountSend} ${symbol} to ${infoSelectedContact.full_name}`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -80,24 +90,31 @@ const ModalTransfer = ({ onClose, handleSubmit, symbol }) => {
       <Modal>
         <h2 className='modal-title'>Send {symbol}</h2>
         <label>To</label>
-        <div className='contact'>
-          <div className='select' onClick={() => setShowList(!showList)}>
-            <span className='name'>{infoSelectedContact?.name || 'Select contact'}</span>
-            <span className='address'>
+        <div className='input-group'>
+          <div className='contact'>
+            <div className='select' onClick={() => setShowList(!showList)}>
+              <span className='name'>{infoSelectedContact?.full_name || 'Select contact'}</span>
+              <span className='address'>
+                {
+                  infoSelectedContact?.cryptocurrency_account
+                    ? infoSelectedContact?.cryptocurrency_account.slice(0, 6) + '...' + infoSelectedContact?.cryptocurrency_account.slice(-6)
+                    : ''
+                }
+              </span>
+            </div>
+
+            <div className={`contact-list ${showList ? 'active' : ''}`}>
               {
-                infoSelectedContact?.address
-                  ? infoSelectedContact?.address.slice(0, 6) + '...' + infoSelectedContact?.address.slice(-6)
-                  : ''
+                contacts.map(contact => (
+                  <div key={contact.cryptocurrency_account} onClick={() => handleSelectContact(contact.cryptocurrency_account)} className='contact-option'>{contact.full_name}</div>
+                ))
               }
-            </span>
+            </div>
           </div>
-          <div className={`contact-list ${showList ? 'active' : ''}`}>
-            {
-              contacts.map(contact => (
-                <div key={contact.address} onClick={() => handleSelectContact(contact.address)} className='contact-option'>{contact.name}</div>
-              ))
-            }
-          </div>
+          {
+            contacts.length === 0 &&
+              <small className='input-error'>No data</small>
+          }
         </div>
 
         <label>Amount</label>
@@ -106,7 +123,7 @@ const ModalTransfer = ({ onClose, handleSubmit, symbol }) => {
           <small className='input-error'>{error}</small>
         </div>
 
-        <button className='button-submit' disabled={error || !selectedContact} onClick={handleSubmitTransfer}>Send</button>
+        <button className='button-submit' disabled={error || !selectedContact || loading || queryError} onClick={handleSubmitTransfer}>Send</button>
       </Modal>
 
       <OverlayModal onClick={onClose} />
