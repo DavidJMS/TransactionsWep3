@@ -13,8 +13,11 @@ function CreateContact () {
     const [name, setName] = useState("")
     const [account, setAccount] = useState("")
 
-    const { error, loading, data } = useQuery(CREATE_CONTACT, {
-        variables: {
+
+
+    const addContact = (e) => {
+        e.preventDefault()
+        const { data } = useQuery(CREATE_CONTACT, {
             dataApikey: VITE_DATA_API_KEY,
             datasource: VITE_DATA_SOURCE,
             database: VITE_DATABASE,
@@ -23,8 +26,9 @@ function CreateContact () {
                 cryptocurrency_account: account,
                 full_name: name
             }
-        }
-    })
+        })
+        console.log(data)
+    }
 
     
     const handleSubmit = (e) => {

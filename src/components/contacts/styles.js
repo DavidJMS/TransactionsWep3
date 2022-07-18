@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import styled  from "styled-components";
+import styled from "styled-components";
 
 import { v } from "../../ui/components/styles/Variables";
 
@@ -38,6 +38,14 @@ export const CCardText = styled.div`
     font-size: ${v.fontSizeText};
     font-weight: ${v.fontWeight};
     color: ${v.textColor};
+`;
+
+export const CGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: ${v.xlSpacing};
+    width: 100%;
+    margin: ${v.smSpacing} 0;
 `;
 
 

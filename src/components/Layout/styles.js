@@ -11,4 +11,5 @@ export const SMain = styled.main`
     overflow-y: auto;   
     flex: 1;
     height: 100vh;
+    
 `
