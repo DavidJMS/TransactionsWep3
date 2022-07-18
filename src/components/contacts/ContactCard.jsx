@@ -19,7 +19,7 @@ const ContactCard = (props) => {
                 <CCardText>
                     {props.account}
                 </CCardText>
-                <DeleteContact key={props.key}  pepe={props.pepe} />
+                <DeleteContact uid={props.uid} />
             </CCard>
         </>
     )

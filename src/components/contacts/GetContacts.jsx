@@ -31,12 +31,12 @@ function GetContacts() {
             setUsers(data.getContacts)
         }
     }, [data])
-
+    console.log(users)
     return (
         <>
             <CGrid>
-                {users.map(user => (
-                    <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account} pepe={user._id}/>
+                {users.length >= 1 && users.map(user => (
+                    <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account} uid={user._id}/>
                 ))}
             </CGrid>
         </>
