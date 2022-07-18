@@ -27,11 +27,14 @@ export const Modal = styled.div`
   }
 
   .input-group {
-    margin-bottom: 3em;
+    margin-bottom: 1em;
 
     .input-error {
       color: tomato;
     }
+  }
+  .input-group:last-of-type {
+    margin-bottom: 3em;
   }
 
   .input-amount{
@@ -64,7 +67,6 @@ export const Modal = styled.div`
     background-color: #fff;
     border-radius: 5px;
     padding: 1em;
-    margin-bottom: 1em;
     cursor: default;
 
     .select{
