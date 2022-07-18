@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { GET_CONTACT } from '../../querys/contacts'
 import { useState } from 'react'
 import ContactCard from './ContactCard'
+import { CGrid } from './styles'
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
@@ -30,11 +31,13 @@ function GetContacts() {
     }, [data])
 
     return (
-        <div>
-            {users.map(user => (
-                <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account}/>
-            ))}
-        </div>
+        <>
+            <CGrid>
+                {users.map(user => (
+                    <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account}/>
+                ))}
+            </CGrid>
+        </>
     )
 }
 

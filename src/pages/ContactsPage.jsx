@@ -8,6 +8,7 @@ import GetContacts from '../components/Contacts/GetContacts'
 import CreateContact from '../components/Contacts/CreateContact'
 import { Button } from '../ui/components/styles/Button.styled'
 import ModalContact from '../components/Contacts/ModalContact'
+import { CGrid } from '../components/Contacts/styles'
 
 export const ContactsPage = () => {
     const [showModal, setShowModal] = useState(false)
@@ -26,9 +27,10 @@ export const ContactsPage = () => {
                     <ModalContact onClose={() => setShowModal(false)} />
                 }
 
-                <GetContacts />  
+                <GetContacts />
+
             </Container>
-            
+
         </>
     )
 }
