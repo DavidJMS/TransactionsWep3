@@ -10,7 +10,7 @@ const VITE_COLLECTION = import.meta.env.VITE_COLLECTION
 const VITE_DATABASE = import.meta.env.VITE_DATABASE
 const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
-function DeleteContact({ key }) {
+function DeleteContact({ uid }) {
 
     const { error, loading, data } = useQuery(DELETE_CONTACT, {
         variables: {
@@ -18,7 +18,7 @@ function DeleteContact({ key }) {
             datasource: VITE_DATA_SOURCE,
             database: VITE_DATABASE,
             collection: VITE_COLLECTION,   
-            filter: { _id: { $oid: key } }  
+            filter: { _id: { $oid: uid } }  
         } 
     })
 
