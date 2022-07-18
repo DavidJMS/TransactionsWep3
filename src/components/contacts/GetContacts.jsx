@@ -1,10 +1,12 @@
 /*eslint-disable*/
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_CONTACT } from '../../querys/contacts'
-import { useState } from 'react'
+
+// my imports
 import ContactCard from './ContactCard'
 import { CGrid } from './styles'
+
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
@@ -34,7 +36,7 @@ function GetContacts() {
         <>
             <CGrid>
                 {users.map(user => (
-                    <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account}/>
+                    <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account} pepe={user._id}/>
                 ))}
             </CGrid>
         </>
