@@ -9,7 +9,10 @@ export const SSidebar = styled.div`
     background: #3E3E3E;
     height: 100vH;
     padding: ${v.lgSpacing};
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
     position: relative;
 `;
 
@@ -37,6 +40,18 @@ export const SLinkContainer = styled.div`
     border-radius: ${v.borderRadius};
     margin: 8px 0;
 
+    :hover {
+        box-shadow: inset 0 0 0 1px #e0e0e0;
+    }
+`;
+
+export const SLinkContainerBottom = styled.div`
+    background: transparent;
+    border-radius: ${v.borderRadius};
+    margin: 8px 0;
+    width: 100%;
+
+    
     :hover {
         box-shadow: inset 0 0 0 1px #e0e0e0;
     }
