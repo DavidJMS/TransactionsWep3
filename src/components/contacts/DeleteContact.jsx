@@ -12,17 +12,7 @@ const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 function DeleteContact({ uid }) {
 
-    const [deleteContact, { data3, loading3, error3 }] = useMutation(DELETE_CONTACT_MUTATION)
-
-    const { error, loading, data } = useMutation(DELETE_CONTACT, {
-        variables: {
-            dataApikey: VITE_DATA_API_KEY,
-            datasource: VITE_DATA_SOURCE,
-            database: VITE_DATABASE,
-            collection: VITE_COLLECTION,   
-            filter: { _id: { $oid: uid } }  
-        } 
-    })
+    const [deleteContact, { data, loading, error }] = useMutation(DELETE_CONTACT_MUTATION)
     const handleDelete = () => {
         deleteContact({
             variables: {
