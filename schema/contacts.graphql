@@ -37,7 +37,6 @@ type Query {
     # Directiva
     @rest(
       endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/find" # para obtener todos
-      # endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/findOne" # para obtener uno
       method: POST
       configuration: "contact_config"
       headers: [{ name: "api-key", value: "$dataApikey" }]
@@ -137,7 +136,7 @@ type Mutation {
     database: String!
     filter: JSON!
     update: JSON!
-  ): JSON
+  ): JSON!
     @rest(
       endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/updateOne"
       method: POST
