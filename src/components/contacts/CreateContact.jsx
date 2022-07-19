@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { CREATE_CONTACT_MUTATION } from '../../querys/contacts'
 import styled from 'styled-components'
 import { Input } from '../../ui/components/styles/Input.styled'
+import { CButton, CGridItem } from './styles'
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
@@ -45,21 +46,23 @@ function CreateContact() {
 
     return (
         <form onSubmit={addContact}>
-            
+            <CGridItem>
             <Input
                 type="text"
                 placeholder='Name'
                 value={name}
                 onChange={e => setName(e.target.value)}
             />
-
             <Input
                 type="text"
                 placeholder='Account Address'
                 value={account}
                 onChange={e => setAccount(e.target.value)}
             />
-            <button type='submit'>Add Contact</button>
+                
+            <CButton type='submit'>Add</CButton>
+            </CGridItem>
+            
         </form>
     )
 }

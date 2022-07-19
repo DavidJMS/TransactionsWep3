@@ -2,6 +2,7 @@
 import React from 'react'
 import { DELETE_CONTACT_MUTATION } from '../../querys/contacts'
 import { useMutation } from '@apollo/client'
+import { CButton } from './styles'
 
 
 // Environment Vars
@@ -30,9 +31,9 @@ function DeleteContact({ uid, setReload }) {
 
     return (
         <>
-            <button onClick={handleDelete}>
+            <CButton onClick={handleDelete}>
                 Delete Contact
-            </button>
+            </CButton>
         </>
     )
 }
