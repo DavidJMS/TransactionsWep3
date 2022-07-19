@@ -24,7 +24,7 @@ function CreateContact() {
             createContact({
                 variables: {
                     dataApikey: VITE_DATA_API_KEY,
-                    datasource: VITE_DATA_SOURCE,
+                    dataSource: VITE_DATA_SOURCE,
                     database: VITE_DATABASE,
                     collection: VITE_COLLECTION,
                     document: {
