@@ -11,7 +11,7 @@ const ModalContact = ({ onClose, handleSubmit, refetch}) => {
         <>
             <Modal>
                 <h2 className='modal-title'>Add Contact</h2>
-                <CreateContact refetch={refetch} />
+                <CreateContact refetch={refetch} onClose={onClose}/>
             </Modal>
             <OverlayModal onClick={onClose}/>
         </>
