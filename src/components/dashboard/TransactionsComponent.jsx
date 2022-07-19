@@ -1,6 +1,7 @@
 import { Box } from '../../ui/components/styles/Box.styled'
 import { Text } from '../../ui/components/styles/Text.styled'
 import { Transaction } from '../../ui/components/styles/Transaction.styled'
+import { Skeleton } from '../../ui/components/styles/Skeleton.styled'
 
 const TransactionsComponent = ({ transactions, symbol }) => {
   console.log('transactions', transactions)
@@ -30,9 +31,6 @@ const TransactionsComponent = ({ transactions, symbol }) => {
 
       <Box>
         {
-          transactions.length === 0 && <div>No transactions</div>
-        }
-        {
           transactions.length > 0 && transactions.map(transaction => {
             return (
               <Transaction
@@ -52,6 +50,23 @@ const TransactionsComponent = ({ transactions, symbol }) => {
               </Transaction>
             )
           })
+        }
+        {
+          transactions.length === 0 && [...Array(5)].map((index) => (
+            <Transaction key={index}>
+              <div className='icon' />
+              <div className='content'>
+                <div>
+                  <Skeleton width='120px' height='30px' />
+                  <Skeleton width='100px' height='15px' />
+                </div>
+                <div>
+                  <Skeleton width='150px' height='30px' />
+                  <Skeleton width='130px' height='15px' />
+                </div>
+              </div>
+            </Transaction>
+          ))
         }
       </Box>
     </>
