@@ -1,6 +1,26 @@
+# My scalars
 scalar MongoFilter
 scalar MongoProjection
 scalar MongoSort
+
+type Contact {
+  _id: ID!
+  cryptocurrency_account: String!
+  full_name: String!
+}
+
+input DocumentInput {
+  cryptocurrency_account: String!
+  full_name: String!
+}
+
+input MongoInput {
+  dataApikey: String!
+  dataSource: String!
+  collection: String!
+  database: String!
+  document: DocumentInput
+}
 
 type Query {
   getContacts(
@@ -93,4 +113,32 @@ type Query {
       headers: [{ name: "api-key", value: "$dataApikey" }]
       resultroot: "document" # para obtener uno
     )
+}
+
+type Mutation {
+  createContact(
+    dataApikey: String!
+    dataSource: String!
+    collection: String!
+    database: String!
+    document: JSON!
+  ): JSON!
+    @rest(
+      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/insertOne"
+      method: POST
+      configuration: "contact_config"
+      headers: [{ name: "api-key", value: "$dataApikey" }]
+    )
+
+  # updateStore(id: ID!, data: StoreInput!): Store
+  #   @graphql(
+  #     endpoint: "https://graphql.fauna.com/graphql"
+  #     configuration: "fauna_config"
+  #   )
+
+  # deleteStore(id: ID!): Store
+  #   @graphql(
+  #     endpoint: "https://graphql.fauna.com/graphql"
+  #     configuration: "fauna_config"
+  #   )
 }

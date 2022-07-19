@@ -59,9 +59,29 @@ const DELETE_CONTACT = gql`
   }
 `
 
+// Mutations -------------------------------
+const CREATE_CONTACT_MUTATION = gql`
+  mutation MyMutation (
+    $dataApikey: String!, 
+    $dataSource: String!,
+    $collection: String!, 
+    $database: String!, 
+    $document: JSON!
+  ) {
+    createContact (
+      dataApikey: $dataApikey
+      dataSource: $dataSource
+      collection: $collection
+      database: $database
+      document: $document
+    )
+  }
+`
+
 export {
   GET_CONTACT,
   CREATE_CONTACT,
   UPDATE_CONTACT,
-  DELETE_CONTACT
+  DELETE_CONTACT,
+  CREATE_CONTACT_MUTATION
 }
