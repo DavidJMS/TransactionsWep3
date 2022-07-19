@@ -2,13 +2,16 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_CONTACT_MUTATION } from '../../querys/contacts'
+import styled from 'styled-components'
+import { Input } from '../../ui/components/styles/Input.styled'
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
 const VITE_COLLECTION = import.meta.env.VITE_COLLECTION
 const VITE_DATABASE = import.meta.env.VITE_DATABASE
+const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
-function CreateContact () {
+function CreateContact() {
     const [name, setName] = useState("")
     const [account, setAccount] = useState("")
 
@@ -21,7 +24,7 @@ function CreateContact () {
             createContact({
                 variables: {
                     dataApikey: VITE_DATA_API_KEY,
-                    datasource:'Cluster0',
+                    datasource: VITE_DATA_SOURCE,
                     database: VITE_DATABASE,
                     collection: VITE_COLLECTION,
                     document: {
@@ -36,23 +39,26 @@ function CreateContact () {
 
     }
 
+
+
     return (
         <form onSubmit={addContact}>
-            <input 
-                type="text" 
+            
+            <Input
+                type="text"
                 placeholder='Name'
-                value={name} 
+                value={name}
                 onChange={e => setName(e.target.value)}
             />
 
-            <input 
-                type="text" 
+            <Input
+                type="text"
                 placeholder='Account Address'
-                value={account} 
+                value={account}
                 onChange={e => setAccount(e.target.value)}
             />
             <button type='submit'>Add Contact</button>
-        </form> 
+        </form>
     )
 }
 
