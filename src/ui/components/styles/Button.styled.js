@@ -4,6 +4,7 @@ export const Button = styled.button`
   display: inline-block;
   font-size: 1em;
   margin: 1em;
+  cursor: pointer;
   padding: 0.8em 2em;
   border: none;
   border-radius: 12px;
@@ -12,6 +13,6 @@ export const Button = styled.button`
   color: ${({ color }) => color || '#000'};
 
   &:hover {
-    background-color: #dbd9d9;
+    background-color: ${({ bg }) => bg || 'palevioletred'};
   }
 `
