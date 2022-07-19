@@ -15,7 +15,9 @@ const VITE_DATABASE = import.meta.env.VITE_DATABASE
 const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 function GetContacts() {
-    
+
+    const [reload, setReload] = useState('')
+
     const { error, loading, data } = useQuery(GET_CONTACT, {
         variables: {
             dataApikey: VITE_DATA_API_KEY,
@@ -30,13 +32,13 @@ function GetContacts() {
         if (data) {
             setUsers(data.getContacts)
         }
-    }, [data])
+    }, [data, reload])
     console.log(users)
     return (
         <>
             <CGrid>
                 {users.length >= 1 && users.map(user => (
-                    <ContactCard key={user._id} name={user.full_name} account={user.cryptocurrency_account} uid={user._id}/>
+                    <ContactCard setReload={setReload} key={user._id} name={user.full_name} account={user.cryptocurrency_account} uid={user._id}/>
                 ))}
             </CGrid>
         </>
