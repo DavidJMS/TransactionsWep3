@@ -12,6 +12,7 @@ const VITE_DATABASE = import.meta.env.VITE_DATABASE
 const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 const ModalTransfer = ({ onClose, handleSubmit, symbol }) => {
+  const wallet = window.myWallet
   const [showList, setShowList] = useState(false)
   const [contacts, setContacts] = useState([])
   const [selectedContact, setSelectedContact] = useState(null)
@@ -25,7 +26,10 @@ const ModalTransfer = ({ onClose, handleSubmit, symbol }) => {
       dataApikey: VITE_DATA_API_KEY,
       datasource: VITE_DATA_SOURCE,
       database: VITE_DATABASE,
-      collection: VITE_COLLECTION
+      collection: VITE_COLLECTION,
+      filter: {
+        user_wallet: wallet
+      }
     }
   })
 
