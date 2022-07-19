@@ -28,7 +28,7 @@ type Query {
     dataSource: String!
     collection: String!
     database: String!
-    filter: MongoFilter
+    filter: JSON!
     projection: MongoProjection
     sort: MongoSort
     limit: Int

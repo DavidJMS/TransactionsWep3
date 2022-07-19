@@ -10,6 +10,7 @@ const PrivateRoute = () => {
     ethereum.request({
       method: 'eth_requestAccounts'
     }).then(accounts => {
+      window.myWallet = accounts[0]
       setMyAddress(accounts[0])
     }).finally(() => {
       setLoading(false)

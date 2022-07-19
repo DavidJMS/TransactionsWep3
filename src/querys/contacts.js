@@ -1,12 +1,19 @@
 import { gql } from '@apollo/client'
 
 const GET_CONTACT = gql`
-  query MyQuery ($dataApikey: String!, $datasource: String!, $database: String!, $collection: String! ) {
+  query MyQuery (
+    $dataApikey: String!,
+    $datasource: String!, 
+    $database: String!, 
+    $collection: String! 
+    $filter: JSON! 
+  ) {
     getContacts(
       dataApikey: $dataApikey
       collection: $collection
       database: $database
       dataSource: $datasource
+      filter: $filter
     )
   }
 `

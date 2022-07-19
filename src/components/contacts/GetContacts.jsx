@@ -16,6 +16,7 @@ const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 function GetContacts() {
 
+    const wallet = window.myWallet
     const [reload, setReload] = useState('')
 
     const { error, loading, data } = useQuery(GET_CONTACT, {
@@ -23,7 +24,10 @@ function GetContacts() {
             dataApikey: VITE_DATA_API_KEY,
             datasource: VITE_DATA_SOURCE,
             database: VITE_DATABASE,
-            collection: VITE_COLLECTION
+            collection: VITE_COLLECTION,
+            filter: {
+                "user_wallet": wallet
+            }
         }
     })
     const [users, setUsers] = useState([])

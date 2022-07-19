@@ -12,6 +12,7 @@ const VITE_DATABASE = import.meta.env.VITE_DATABASE
 const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 function CreateContact() {
+    const wallet = window.myWallet
     const [name, setName] = useState("")
     const [account, setAccount] = useState("")
 
@@ -28,6 +29,7 @@ function CreateContact() {
                     database: VITE_DATABASE,
                     collection: VITE_COLLECTION,
                     document: {
+                        user_wallet: wallet,
                         full_name: name,
                         cryptocurrency_account: account
                     }
