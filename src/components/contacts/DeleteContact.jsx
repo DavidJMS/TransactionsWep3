@@ -17,7 +17,7 @@ function DeleteContact({ uid }) {
         deleteContact({
             variables: {
                 dataApikey: VITE_DATA_API_KEY,
-                datasource: VITE_DATA_SOURCE,
+                dataSource: VITE_DATA_SOURCE,
                 database: VITE_DATABASE,
                 collection: VITE_COLLECTION,   
                 filter: { _id: { $oid: uid } }  

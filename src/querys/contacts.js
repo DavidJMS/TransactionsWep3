@@ -101,12 +101,12 @@ const UPDATE_CONTACT_MUTATION = gql`
 const DELETE_CONTACT_MUTATION = gql`
   mutation MyMutation (
     $dataApikey: String!, 
-    $datasource: String!, 
+    $dataSource: String!, 
     $database: String!,
     $collection: String!, 
     $filter: JSON!
   ) {
-    createContact (
+    deleteContact (
       dataApikey: $dataApikey
       dataSource: $dataSource
       database: $database
