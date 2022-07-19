@@ -11,7 +11,7 @@ const VITE_COLLECTION = import.meta.env.VITE_COLLECTION
 const VITE_DATABASE = import.meta.env.VITE_DATABASE
 const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
-function DeleteContact({ uid, setReload }) {
+function DeleteContact({ uid, refetch }) {
 
     const [deleteContact, { data, loading, error }] = useMutation(DELETE_CONTACT_MUTATION)
     const handleDelete = () => {
@@ -25,7 +25,7 @@ function DeleteContact({ uid, setReload }) {
             }
         })
         if(!error){
-            setReload(uid)
+            refetch()
         }
     }
 

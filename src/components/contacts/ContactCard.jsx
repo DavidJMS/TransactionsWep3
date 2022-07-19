@@ -9,17 +9,17 @@ import {
 //my imports
 import DeleteContact from './DeleteContact'
 
-const ContactCard = (props) => {
+const ContactCard = ({uid, refetch, name, account}) => {
     return (
         <>
             <CCard>
                 <CCardHeading>
-                    {props.name}
+                    {name}
                 </CCardHeading>
                 <CCardText>
-                    {props.account}
+                    {account}
                 </CCardText>
-                <DeleteContact uid={props.uid} setReload={props.setReload}/>
+                <DeleteContact uid={uid} refetch={refetch}/>
             </CCard>
         </>
     )

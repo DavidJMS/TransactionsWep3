@@ -19,7 +19,7 @@ function GetContacts() {
     const wallet = window.myWallet
     const [reload, setReload] = useState('')
 
-    const { error, loading, data } = useQuery(GET_CONTACT, {
+    const { error, loading, data, refetch } = useQuery(GET_CONTACT, {
         variables: {
             dataApikey: VITE_DATA_API_KEY,
             datasource: VITE_DATA_SOURCE,
@@ -28,11 +28,14 @@ function GetContacts() {
             filter: {
                 "user_wallet": wallet
             }
-        }
+        },
+        refetchIntervalInBackground:true,
+        refetchInterval: 5000,
     })
     const [users, setUsers] = useState([])
 
     useEffect(() => {
+        console.log('ejecutado', reload)
         if (data) {
             setUsers(data.getContacts)
         }
@@ -42,7 +45,7 @@ function GetContacts() {
         <>
             <CGrid>
                 {users.length >= 1 && users.map(user => (
-                    <ContactCard setReload={setReload} key={user._id} name={user.full_name} account={user.cryptocurrency_account} uid={user._id}/>
+                    <ContactCard refetch={refetch} key={user._id} name={user.full_name} account={user.cryptocurrency_account} uid={user._id}/>
                 ))}
             </CGrid>
         </>
