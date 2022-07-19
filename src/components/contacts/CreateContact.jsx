@@ -12,7 +12,7 @@ const VITE_COLLECTION = import.meta.env.VITE_COLLECTION
 const VITE_DATABASE = import.meta.env.VITE_DATABASE
 const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
-function CreateContact() {
+function CreateContact({refetch}) {
     const wallet = window.myWallet
     const [name, setName] = useState("")
     const [account, setAccount] = useState("")
@@ -36,6 +36,9 @@ function CreateContact() {
                     }
                 }
             });
+            if(!error){
+                refetch()
+            }
         } catch (error) {
             console.log(error)
         }
