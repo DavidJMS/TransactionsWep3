@@ -78,10 +78,49 @@ const CREATE_CONTACT_MUTATION = gql`
   }
 `
 
+const UPDATE_CONTACT_MUTATION = gql`
+  mutation MyMutation (
+    $dataApikey: String!, 
+    $datasource: String!, 
+    $database: String!,
+    $collection: String!, 
+    $filter: JSON!,
+    $update: JSON!
+  ) {
+    createContact (
+      dataApikey: $dataApikey
+      dataSource: $dataSource
+      collection: $collection
+      database: $database
+      filter: $filter
+      update: $update     
+    )
+  }
+`
+
+const DELETE_CONTACT_MUTATION = gql`
+  mutation MyMutation (
+    $dataApikey: String!, 
+    $datasource: String!, 
+    $database: String!,
+    $collection: String!, 
+    $filter: JSON!
+  ) {
+    createContact (
+      dataApikey: $dataApikey
+      dataSource: $dataSource
+      database: $database
+      collection: $collection
+      filter: $filter
+    )
+  }
+`
 export {
   GET_CONTACT,
   CREATE_CONTACT,
   UPDATE_CONTACT,
   DELETE_CONTACT,
-  CREATE_CONTACT_MUTATION
+  CREATE_CONTACT_MUTATION,
+  UPDATE_CONTACT_MUTATION,
+  DELETE_CONTACT_MUTATION
 }

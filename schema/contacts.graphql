@@ -130,15 +130,32 @@ type Mutation {
       headers: [{ name: "api-key", value: "$dataApikey" }]
     )
 
-  # updateStore(id: ID!, data: StoreInput!): Store
-  #   @graphql(
-  #     endpoint: "https://graphql.fauna.com/graphql"
-  #     configuration: "fauna_config"
-  #   )
+  updateStore(
+    dataApikey: String!
+    dataSource: String!
+    collection: String!
+    database: String!
+    filter: JSON!
+    update: JSON!
+  ): JSON
+    @rest(
+      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/updateOne"
+      method: POST
+      configuration: "contact_config"
+      headers: [{ name: "api-key", value: "$dataApikey" }]
+    )
 
-  # deleteStore(id: ID!): Store
-  #   @graphql(
-  #     endpoint: "https://graphql.fauna.com/graphql"
-  #     configuration: "fauna_config"
-  #   )
+  deleteStore(
+    dataApikey: String!
+    dataSource: String!
+    collection: String!
+    database: String!
+    filter: JSON!
+  ): JSON!
+    @graphql(
+      endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/deleteOne"
+      method: POST
+      configuration: "contact_config"
+      headers: [{ name: "api-key", value: "$dataApikey" }]
+    )
 }
