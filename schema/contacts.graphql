@@ -130,7 +130,7 @@ type Mutation {
       headers: [{ name: "api-key", value: "$dataApikey" }]
     )
 
-  updateStore(
+  updateContact(
     dataApikey: String!
     dataSource: String!
     collection: String!
@@ -145,14 +145,14 @@ type Mutation {
       headers: [{ name: "api-key", value: "$dataApikey" }]
     )
 
-  deleteStore(
+  deleteContact(
     dataApikey: String!
     dataSource: String!
     collection: String!
     database: String!
     filter: JSON!
   ): JSON!
-    @graphql(
+    @rest(
       endpoint: "https://data.mongodb-api.com/app/data-fyput/endpoint/data/v1/action/deleteOne"
       method: POST
       configuration: "contact_config"
