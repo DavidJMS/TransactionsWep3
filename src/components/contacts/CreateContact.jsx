@@ -1,59 +1,43 @@
 /*eslint-disable*/
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { CREATE_CONTACT } from '../../querys/contacts'
+import { useMutation } from '@apollo/react-hooks'
+import { CREATE_CONTACT_MUTATION } from '../../querys/contacts'
 
 // Environment Vars
 const VITE_DATA_API_KEY = import.meta.env.VITE_DATA_API_KEY
 const VITE_COLLECTION = import.meta.env.VITE_COLLECTION
 const VITE_DATABASE = import.meta.env.VITE_DATABASE
-const VITE_DATA_SOURCE = import.meta.env.VITE_DATA_SOURCE
 
 function CreateContact () {
     const [name, setName] = useState("")
     const [account, setAccount] = useState("")
 
+    const [createContact, { error }] = useMutation(CREATE_CONTACT_MUTATION)
 
 
     const addContact = (e) => {
         e.preventDefault()
-        const { data } = useQuery(CREATE_CONTACT, {
-            dataApikey: VITE_DATA_API_KEY,
-            datasource: VITE_DATA_SOURCE,
-            database: VITE_DATABASE,
-            collection: VITE_COLLECTION,
-            document: {
-                cryptocurrency_account: account,
-                full_name: name
-            }
-        })
-        console.log(data)
-    }
-
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (name === "" || account === "") {
-            alert("Please fill all fields")
-        }
-        else {
-            data.createContact 
-            .then(res => {
-                console.log(res)
-            }
-            )
-            .catch(err => {
-                console.log(err)
-            }
-            )
-            
+        try {
+            createContact({
+                variables: {
+                    dataApikey: VITE_DATA_API_KEY,
+                    datasource:'Cluster0',
+                    database: VITE_DATABASE,
+                    collection: VITE_COLLECTION,
+                    document: {
+                        full_name: name,
+                        cryptocurrency_account: account
+                    }
+                }
+            });
+        } catch (error) {
+            console.log(error)
         }
 
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={addContact}>
             <input 
                 type="text" 
                 placeholder='Name'
