@@ -7,7 +7,7 @@ export const SLayout = styled.div`
     
 `
 export const SMain = styled.main`
-    padding: calc(${v.xxlSpacing} * 2);
+    padding: calc(${v.xxlSpacing} * 1);
     overflow-y: auto;   
     flex: 1;
     height: 100vh;
