@@ -7,8 +7,11 @@ import GetContacts from '../components/Contacts/GetContacts'
 import { Button } from '../ui/components/styles/Button.styled'
 import ModalContact from '../components/Contacts/ModalContact'
 import { AiOutlineUserAdd } from 'react-icons/ai'
+
+
 export const ContactsPage = () => {
     const [showModal, setShowModal] = useState(false)
+
 
     return (
         <>

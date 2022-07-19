@@ -29,6 +29,7 @@ function DeleteContact({ uid, refetch }) {
         }
     }
 
+
     return (
         <>
             <CButton onClick={handleDelete}>
